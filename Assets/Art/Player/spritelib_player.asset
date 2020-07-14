@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bf7c34a0dc4e6348bea04faa70406ee, type: 3}
+  m_Name: spritelib_player
+  m_EditorClassIdentifier: 
+  m_Labels:
+  - m_Name: head
+    m_Hash: -1477183844
+    m_CategoryList:
+    - m_Name: head_noot
+      m_Hash: -1340013142
+      m_Sprite: {fileID: 21300000, guid: a4bcf5a0f0cb89940846e9227cba6fb2, type: 3}
+    - m_Name: head_nert
+      m_Hash: 1121643616
+      m_Sprite: {fileID: 21300000, guid: ef676cb0130d43a4c9682996f2736e2f, type: 3}
+  - m_Name: body
+    m_Hash: -609743950
+    m_CategoryList:
+    - m_Name: body_noot
+      m_Hash: 1505733918
+      m_Sprite: {fileID: 21300000, guid: 4d2d4001be6f0204ba6da4106c868834, type: 3}
+    - m_Name: body_nert
+      m_Hash: -1421589292
+      m_Sprite: {fileID: 21300000, guid: 4a4781fc334d70846849a0e2b65c6aed, type: 3}
