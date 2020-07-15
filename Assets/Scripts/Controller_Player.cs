@@ -18,6 +18,7 @@ public class Controller_Player : MonoBehaviour
     // Parameters
     [SerializeField] private float initial_speed = 0f;
     [SerializeField] private float jump_velocity = 0f;
+    [SerializeField] private int jump_lock = 0;
     [SerializeField] private float noot_level = 0f; // 0 is black form, 1 is white form
     [SerializeField] private float noot_speed = 0f;
 
@@ -25,11 +26,11 @@ public class Controller_Player : MonoBehaviour
 
     // Inputs
     private float input_horizontal = 0f;
-    private float input_vertical = 0f;
 
     private float ground_check_rad = 0f;
-    private bool vertical_lock = false;
+    private float jump_counter = 0;
     private bool facing_right = true;
+    private bool grounded = true;
 
     private float noot_multiplier = -1f;
 
@@ -52,9 +53,12 @@ public class Controller_Player : MonoBehaviour
 
     private void Update()
     {
+        ++jump_counter;
+
         // Check inputs
         input_horizontal = Input.GetAxis("Horizontal");
-        float input_vertical_raw = Input.GetAxisRaw("Vertical");
+        float input_vertical = Input.GetAxisRaw("Vertical"); //input_vertical_raw
+        /* On Button Down system
         input_vertical = vertical_lock ? 0 : input_vertical_raw;
         if (vertical_lock && input_vertical_raw == 0)
         {
@@ -64,6 +68,7 @@ public class Controller_Player : MonoBehaviour
         {
             vertical_lock = true;
         }
+        */
 
         if ((input_horizontal < 0 && facing_right) || (input_horizontal > 0 && !facing_right))
         {
@@ -71,7 +76,7 @@ public class Controller_Player : MonoBehaviour
         }
 
         // Check ground collision
-        bool grounded = Physics2D.OverlapCircle((Vector2)ref_ground_check.position, ground_check_rad, mask_ground);
+        grounded = Physics2D.OverlapCircle((Vector2)ref_ground_check.position, ground_check_rad, mask_ground);
         if (!ref_animator.GetBool("grounded") && grounded)
         {
             ref_particles_ground.Play();
@@ -80,10 +85,11 @@ public class Controller_Player : MonoBehaviour
         ref_animator.SetBool("grounded", grounded);
 
         // Jumping, can't handle jumping in FixedUpdate, need to catch all frames due to acting on key down
-        if (input_vertical > 0 && grounded)
+        if (input_vertical > 0 && grounded && jump_counter >= jump_lock)
         {
             ref_rbody.AddForce(new Vector2(0, jump_velocity), ForceMode2D.Force);
             Manager_Sounds.Instance.PlayJump();
+            jump_counter = 0;
         }
 
         // Form update
