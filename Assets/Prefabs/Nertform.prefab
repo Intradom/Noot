@@ -7,6 +7,49 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1646354210, guid: 28a1f35565d10c14981fc4ccdf7b73a1, type: 3}
+      propertyPath: m_DampingRatio
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1646354210, guid: 28a1f35565d10c14981fc4ccdf7b73a1, type: 3}
+      propertyPath: m_Frequency
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 301589605079120841, guid: 28a1f35565d10c14981fc4ccdf7b73a1,
+        type: 3}
+      propertyPath: is_nootform
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 481804365129162177, guid: 28a1f35565d10c14981fc4ccdf7b73a1,
+        type: 3}
+      propertyPath: m_AutoConfigureConnectedAnchor
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 481804365129162177, guid: 28a1f35565d10c14981fc4ccdf7b73a1,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 481804365129162177, guid: 28a1f35565d10c14981fc4ccdf7b73a1,
+        type: 3}
+      propertyPath: m_ConnectedAnchor.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 481804365129162177, guid: 28a1f35565d10c14981fc4ccdf7b73a1,
+        type: 3}
+      propertyPath: m_DampingRatio
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2006384026490676778, guid: 28a1f35565d10c14981fc4ccdf7b73a1,
+        type: 3}
+      propertyPath: is_nootform
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2006384026490676778, guid: 28a1f35565d10c14981fc4ccdf7b73a1,
+        type: 3}
+      propertyPath: scale_deadzone
+      value: 0.1
+      objectReference: {fileID: 0}
     - target: {fileID: 8351138955232593124, guid: 28a1f35565d10c14981fc4ccdf7b73a1,
         type: 3}
       propertyPath: m_Sprite
@@ -33,7 +76,7 @@ PrefabInstance:
     - target: {fileID: 8351138955966957602, guid: 28a1f35565d10c14981fc4ccdf7b73a1,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8351138955966957602, guid: 28a1f35565d10c14981fc4ccdf7b73a1,
         type: 3}

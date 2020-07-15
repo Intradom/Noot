@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.U2D.Animation;
+//using UnityEngine.Experimental.U2D.Animation;
 
 public class Controller_Player : MonoBehaviour
 {
@@ -10,26 +10,32 @@ public class Controller_Player : MonoBehaviour
     [SerializeField] private Transform ref_ground_check = null;
     [SerializeField] private Rigidbody2D ref_rbody = null;
     [SerializeField] private Animator ref_animator = null;
+    [SerializeField] private SpriteRenderer ref_renderer_head = null;
     [SerializeField] private SpriteRenderer ref_renderer_body = null;
-    [SerializeField] private SpriteResolver ref_resolver_head = null;
+    [SerializeField] private SpriteRenderer ref_renderer_face = null;
 
     // Parameters
-    [SerializeField] private float initial_speed = 0;
-    [SerializeField] private float jump_velocity = 0;
-    [SerializeField] private float jump_reset_lock = 0;
-    [SerializeField] private bool noot = true; // noot is black form, nert is white form
+    [SerializeField] private float initial_speed = 0f;
+    [SerializeField] private float jump_velocity = 0f;
+    [SerializeField] private float noot_level = 0f; // 0 is black form, 1 is white form
+    [SerializeField] private float noot_speed = 0f;
 
     /*******************************/
 
     // Inputs
-    private float input_horizontal = 0;
-    private float input_vertical = 0;
+    private float input_horizontal = 0f;
+    private float input_vertical = 0f;
 
-    private float ground_check_rad = 0;
-    private int jump_frame_counter = 0;
+    private float ground_check_rad = 0f;
     private bool vertical_lock = false;
     private bool facing_right = true;
-    private bool jumping = false;
+
+    private float noot_multiplier = -1f;
+
+    public float GetNoot()
+    {
+        return noot_level;
+    }
 
     private void FlipSprite()
     {
@@ -45,9 +51,6 @@ public class Controller_Player : MonoBehaviour
 
     private void Update()
     {
-        // Variable updates
-        ++jump_frame_counter;
-
         // Check inputs
         input_horizontal = Input.GetAxis("Horizontal");
         float input_vertical_raw = Input.GetAxisRaw("Vertical");
@@ -67,25 +70,39 @@ public class Controller_Player : MonoBehaviour
         }
 
         // Check ground collision
-        if (jumping && jump_frame_counter >= jump_reset_lock && Physics2D.OverlapCircle((Vector2)ref_ground_check.position, ground_check_rad, mask_ground))
-        {
-            jumping = false;
-        }
+        bool grounded = Physics2D.OverlapCircle((Vector2)ref_ground_check.position, ground_check_rad, mask_ground);
+        ref_animator.SetBool("grounded", grounded);
 
         // Jumping, can't handle jumping in FixedUpdate, need to catch all frames due to acting on key down
-        if (!jumping && input_vertical > 0)
+        if (input_vertical > 0 && grounded)
         {
             ref_rbody.AddForce(new Vector2(0, jump_velocity), ForceMode2D.Force);
-            jumping = true;
-            jump_frame_counter = 0;
         }
 
-        // Form
-        if (Input.GetButtonDown("Swap"))
+        // Form update
+        if (Input.GetButton("Swap"))
         {
-            noot = !noot;
+            if (Input.GetButtonDown("Swap"))
+            {
+                noot_multiplier *= -1;
+            }
+            Color c = new Color(noot_level, noot_level, noot_level);
+            ref_renderer_head.color = c;
+            ref_renderer_body.color = c;
+            ref_renderer_face.color = new Color(1f - noot_level, 1f - noot_level, 1f - noot_level);
 
-            if (noot) // black form
+            noot_level += noot_multiplier * noot_speed;
+            if (noot_level < 0f)
+            {
+                noot_level = 0f;
+            }
+            else if (noot_level > 1f)
+            {
+                noot_level = 1f;
+            }
+            
+            /*
+            if (noot_level <= 0.5) // black form
             {
                 ref_renderer_body.color = Color.black;
                 ref_resolver_head.SetCategoryAndLabel("head", "head_noot");
@@ -96,6 +113,7 @@ public class Controller_Player : MonoBehaviour
                 ref_resolver_head.SetCategoryAndLabel("head", "head_nert");
             }
             ref_resolver_head.ResolveSpriteToSpriteRenderer();
+            */
         }
     }
 
