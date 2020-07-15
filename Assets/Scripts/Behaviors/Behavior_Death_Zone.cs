@@ -14,6 +14,7 @@ public class Behavior_Death_Zone : MonoBehaviour
         {
             if (collision.tag == tag)
             {
+                Manager_Sounds.Instance.PlayHurt();
                 SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
             }
         }

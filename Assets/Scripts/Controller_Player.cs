@@ -13,6 +13,7 @@ public class Controller_Player : MonoBehaviour
     [SerializeField] private SpriteRenderer ref_renderer_head = null;
     [SerializeField] private SpriteRenderer ref_renderer_body = null;
     [SerializeField] private SpriteRenderer ref_renderer_face = null;
+    [SerializeField] private ParticleSystem ref_particles_ground = null;
 
     // Parameters
     [SerializeField] private float initial_speed = 0f;
@@ -71,12 +72,18 @@ public class Controller_Player : MonoBehaviour
 
         // Check ground collision
         bool grounded = Physics2D.OverlapCircle((Vector2)ref_ground_check.position, ground_check_rad, mask_ground);
+        if (!ref_animator.GetBool("grounded") && grounded)
+        {
+            ref_particles_ground.Play();
+            Manager_Sounds.Instance.PlayLand();
+        }
         ref_animator.SetBool("grounded", grounded);
 
         // Jumping, can't handle jumping in FixedUpdate, need to catch all frames due to acting on key down
         if (input_vertical > 0 && grounded)
         {
             ref_rbody.AddForce(new Vector2(0, jump_velocity), ForceMode2D.Force);
+            Manager_Sounds.Instance.PlayJump();
         }
 
         // Form update
@@ -89,8 +96,11 @@ public class Controller_Player : MonoBehaviour
             Color c = new Color(noot_level, noot_level, noot_level);
             ref_renderer_head.color = c;
             ref_renderer_body.color = c;
+            var particle_main = ref_particles_ground.main;
+            particle_main.startColor = c;
             ref_renderer_face.color = new Color(1f - noot_level, 1f - noot_level, 1f - noot_level);
 
+            float past_noot_level = noot_level;
             noot_level += noot_multiplier * noot_speed;
             if (noot_level < 0f)
             {
@@ -101,6 +111,11 @@ public class Controller_Player : MonoBehaviour
                 noot_level = 1f;
             }
             
+            if ((past_noot_level < 0.5f && noot_level > 0.5f) || (past_noot_level > 0.5f && noot_level < 0.5f))
+            {
+                Manager_Sounds.Instance.PlayFormChange();
+            }
+
             /*
             if (noot_level <= 0.5) // black form
             {
