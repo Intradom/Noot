@@ -8,7 +8,7 @@ public class Behavior_Goal : MonoBehaviour
     [SerializeField] private string[] tag_trigger = null;
     [SerializeField] private Object ref_next_level = null;
 
-    private void OnColliderEnter2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
         bool trigger = false;
         foreach (string t in tag_trigger)

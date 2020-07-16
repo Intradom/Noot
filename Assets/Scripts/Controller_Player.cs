@@ -21,6 +21,8 @@ public class Controller_Player : MonoBehaviour
     [SerializeField] private int jump_lock = 0;
     [SerializeField] private float noot_level = 0f; // 0 is black form, 1 is white form
     [SerializeField] private float noot_speed = 0f;
+    [SerializeField] private float noot_gravity = 1f;
+    [SerializeField] private float nert_gravity = 0.5f;
 
     /*******************************/
 
@@ -32,7 +34,7 @@ public class Controller_Player : MonoBehaviour
     private bool facing_right = true;
     private bool grounded = true;
 
-    private float noot_multiplier = -1f;
+    private float noot_multiplier = 1f;
 
     public float GetNoot()
     {
@@ -95,10 +97,6 @@ public class Controller_Player : MonoBehaviour
         // Form update
         if (Input.GetButton("Swap"))
         {
-            if (Input.GetButtonDown("Swap"))
-            {
-                noot_multiplier *= -1;
-            }
             Color c = new Color(noot_level, noot_level, noot_level);
             ref_renderer_head.color = c;
             ref_renderer_body.color = c;
@@ -108,13 +106,16 @@ public class Controller_Player : MonoBehaviour
 
             float past_noot_level = noot_level;
             noot_level += noot_multiplier * noot_speed;
+            ref_rbody.gravityScale = nert_gravity + (1f - noot_level) * (noot_gravity - nert_gravity); // Noot has higher gravity scale than Nert
             if (noot_level < 0f)
             {
                 noot_level = 0f;
+                noot_multiplier *= -1;
             }
             else if (noot_level > 1f)
             {
                 noot_level = 1f;
+                noot_multiplier *= -1;
             }
             
             if ((past_noot_level < 0.5f && noot_level > 0.5f) || (past_noot_level > 0.5f && noot_level < 0.5f))
