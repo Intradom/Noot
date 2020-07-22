@@ -12,6 +12,7 @@ public class Manager_Sounds : MonoBehaviour
     [SerializeField] private AudioClip sfx_land = null;
     [SerializeField] private AudioClip sfx_form_change = null;
     [SerializeField] private AudioClip sfx_hurt = null;
+    [SerializeField] private AudioClip sfx_goal = null;
 
     public static Manager_Sounds Instance = null;
 
@@ -43,6 +44,11 @@ public class Manager_Sounds : MonoBehaviour
     public void PlayHurt()
     {
         source_sfx.PlayOneShot(sfx_hurt);
+    }
+
+    public void PlayGoal()
+    {
+        source_sfx.PlayOneShot(sfx_goal);
     }
 
     private void Awake()

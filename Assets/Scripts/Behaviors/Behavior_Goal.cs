@@ -32,11 +32,13 @@ public class Behavior_Goal : MonoBehaviour
             // Check for valid 
             if (next_build_index < SceneManager.sceneCountInBuildSettings)
             {
+                Manager_Sounds.Instance.PlayGoal();
                 SceneManager.LoadScene(next_build_index);
             }
         }
         else
         {
+            Manager_Sounds.Instance.PlayGoal();
             SceneManager.LoadScene(ref_next_level.name);
         }   
     }

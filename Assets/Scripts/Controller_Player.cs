@@ -105,7 +105,7 @@ public class Controller_Player : MonoBehaviour
             ref_renderer_face.color = new Color(1f - noot_level, 1f - noot_level, 1f - noot_level);
 
             float past_noot_level = noot_level;
-            noot_level += noot_multiplier * noot_speed;
+            noot_level += noot_multiplier * noot_speed * Time.deltaTime;
             ref_rbody.gravityScale = nert_gravity + (1f - noot_level) * (noot_gravity - nert_gravity); // Noot has higher gravity scale than Nert
             if (noot_level < 0f)
             {

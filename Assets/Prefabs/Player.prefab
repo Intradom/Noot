@@ -609,7 +609,9 @@ MonoBehaviour:
   jump_velocity: 250
   jump_lock: 10
   noot_level: 0
-  noot_speed: 0.01
+  noot_speed: 2
+  noot_gravity: 1
+  nert_gravity: 0.5
 --- !u!50 &8720222307952827454
 Rigidbody2D:
   serializedVersion: 4
@@ -713,8 +715,8 @@ MonoBehaviour:
   - {fileID: 3266382965163048094}
   - {fileID: 3266382964721633144}
   m_Bounds:
-    m_Center: {x: 0.0029757023, y: 0.28554192, z: 0}
-    m_Extent: {x: 0.1903283, y: 0.33641914, z: 0}
+    m_Center: {x: 0.0029757023, y: 0.28554204, z: 0}
+    m_Extent: {x: 0.1903283, y: 0.33641922, z: 0}
   m_UseBatching: 1
   m_AlwaysUpdate: 1
 --- !u!70 &8720222307952827452

@@ -7,7 +7,7 @@ public class Behavior_Death_Zone : MonoBehaviour
 {
     [SerializeField] private Object scene_final = null;
     [SerializeField] private Object scene_ending = null;
-    [SerializeField] private GameObject[] ref_to_disable = null;
+    [SerializeField] private string tag_to_disable = null;
     [SerializeField] private string[] tag_reset = null;
     [SerializeField] private string[] tag_destroy = null;
 
@@ -17,7 +17,7 @@ public class Behavior_Death_Zone : MonoBehaviour
         {
             if (SceneManager.GetActiveScene().name == scene_final.name)
             {
-                foreach (GameObject go in ref_to_disable)
+                foreach (GameObject go in GameObject.FindGameObjectsWithTag(tag_to_disable))
                 {
                     go.SetActive(false);
                 }
